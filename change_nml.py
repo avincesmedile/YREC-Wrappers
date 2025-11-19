@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 update_yrec_nml.py
 
