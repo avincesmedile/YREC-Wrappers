@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 update_yrec_nml.py
 
@@ -19,10 +20,11 @@ import os
 import re
 from glob import glob
 from pathlib import Path
+import argparse
 from tqdm import tqdm
 
 
-def change_nml(file_path, root_dir, verbose=False, outpath=None):
+def change_nml(file_path, root_dir, verbose=False, outpath=None, abs_outpaths=False):
     """
     Update .nml1 and .nml2 files in a directory with correct filepaths.
 
@@ -76,7 +78,7 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
             nml[key] = val
         return nml
 
-    def resolve_file_paths(nml_dict):
+    def resolve_file_paths(nml_file, nml_dict):
         """
         Adjust file paths in the nml_dict:
         - General keys: Search in root_dir/input recursively.
@@ -93,15 +95,19 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
                 filename = os.path.basename(val)
                 candidates = glob(os.path.join(input_root, '**', filename), recursive=True)
                 if candidates:
-                    resolved = os.path.abspath(candidates[0])
+                    if abs_outpaths:
+                        resolved = os.path.abspath(candidates[0])
+                    else:
+                        resolved = os.path.relpath(candidates[0], start = file_path)
                     nml_dict[key] = f'"{resolved}"'
-                    if verbose: 
+                    if verbose:
                         print(f"✅ {key} auto-resolved -> {resolved}")
                 continue
 
             # Output file keys
             if key in SPECIAL_KEYS and outpath:
-                constructed = os.path.join(outpath, f"{key.lower()}{SPECIAL_KEYS[key]}")
+                nml_base = os.path.basename(nml_file).replace(".nml1", "")
+                constructed = os.path.join(outpath, f"{nml_base}{SPECIAL_KEYS[key]}")
                 nml_dict[key] = f'"{constructed}"'
                 if verbose:
                     print(f"🏗️ {key} redirected -> {constructed}")
@@ -142,7 +148,7 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
             print(f"\n🔧 Updating: {nml_file}")
         try:
             nml_dict = parse_nml_file(nml_file)
-            nml_dict = resolve_file_paths(nml_dict)
+            nml_dict = resolve_file_paths(nml_file, nml_dict)
             write_updated_nml(nml_file, nml_dict)
         except Exception as e:
             print(f"❌ Error updating {nml_file.name}: {e}")
@@ -150,10 +156,44 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
 
 # Optional: Allow execution from command line or scripts
 if __name__ == "__main__":
-    # Minimal usage example — replace with your paths
+    parser = argparse.ArgumentParser(
+            description=("Updates `.nml1` and `.nml2` namelist files for YREC (Yale Rotating\n"
+            "Evolution Code) models by correcting and resolving internal file paths. It allows\n"
+            "users who have downloaded all YREC dependencies and preserved the directory\n"
+            "structure to automatically fix broken references in their input namelists.\n"
+            "Paths inserted in NML files to locations in the input tree are relative to the\n"
+            "'files' directory by default. This may be changed to absolute paths using the\n"
+            "--abs flag.\n"
+            "Example:\n"
+            "$ change_nml.py --files <nml_dir> --root ../yrec --verbose --out ./out\n"),
+            formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--files", "-f",
+                        help="Directory in which NML1 file(s) may be found",
+                        required=True)
+    parser.add_argument("--root", "-r",
+                        help="YREC root directory. Must contain 'input' dir.",
+                        required=True)
+    parser.add_argument("--out", "-o",
+                        help="Output path where YREC will write files. Relative or absolute.",
+                        required=True)
+    parser.add_argument("--verbose", "-v",
+                        help="Verbose progress output",
+                        default=False,
+                        action="store_true")
+    parser.add_argument("--abs", "-a",
+                        help="Make paths written to output files absolute instead of relative.",
+                        default=False,
+                        action="store_true")
+    args = parser.parse_args()
+
+    # Minimal usage example
     change_nml(
-        file_path="./models/Run_ZAMSmodels",
-        root_dir="./YREC5.1",
-        outpath="./YREC5.1/Output",
-        verbose=True
+        #file_path=".",
+        #root_dir="../..",
+        #outpath="./output",
+        file_path=args.files,
+        root_dir=args.root,
+        outpath=args.out,
+        abs_outpaths=args.abs,
+        verbose=args.verbose
     )
