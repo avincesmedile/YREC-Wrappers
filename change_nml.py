@@ -76,7 +76,7 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
             nml[key] = val
         return nml
 
-    def resolve_file_paths(nml_dict):
+    def resolve_file_paths(nml_file, nml_dict):
         """
         Adjust file paths in the nml_dict:
         - General keys: Search in root_dir/input recursively.
@@ -93,7 +93,7 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
                 filename = os.path.basename(val)
                 candidates = glob(os.path.join(input_root, '**', filename), recursive=True)
                 if candidates:
-                    resolved = os.path.abspath(candidates[0])
+                    resolved = os.path.relpath(candidates[0], start = file_path)
                     nml_dict[key] = f'"{resolved}"'
                     if verbose: 
                         print(f"✅ {key} auto-resolved -> {resolved}")
@@ -101,7 +101,8 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
 
             # Output file keys
             if key in SPECIAL_KEYS and outpath:
-                constructed = os.path.join(outpath, f"{key.lower()}{SPECIAL_KEYS[key]}")
+                nml_base = os.path.basename(nml_file).replace(".nml1", "")
+                constructed = os.path.join(outpath, f"{nml_base}{SPECIAL_KEYS[key]}")
                 nml_dict[key] = f'"{constructed}"'
                 if verbose:
                     print(f"🏗️ {key} redirected -> {constructed}")
@@ -142,7 +143,7 @@ def change_nml(file_path, root_dir, verbose=False, outpath=None):
             print(f"\n🔧 Updating: {nml_file}")
         try:
             nml_dict = parse_nml_file(nml_file)
-            nml_dict = resolve_file_paths(nml_dict)
+            nml_dict = resolve_file_paths(nml_file, nml_dict)
             write_updated_nml(nml_file, nml_dict)
         except Exception as e:
             print(f"❌ Error updating {nml_file.name}: {e}")
