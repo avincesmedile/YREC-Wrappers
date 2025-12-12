@@ -16,7 +16,7 @@ Tools Include:
 Includes a yrec grid running function that quickly makes the sample grid. 
 
 ### alternate_tools: 
-Provides backups and simpler versions of the ```main_tools``` repository for newer users or backups in case the main tools do not work. 
+Provides backups and simpler versions of the ```main_tools``` repository for newer users or backups in case the main tools do not work. Includes a parallel processing code for running YREC
 
 
 
