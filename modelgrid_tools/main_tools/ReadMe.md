@@ -1,5 +1,7 @@
 # YREC Tools (`main_tools/`)
-
+## Authors: 
+- S.Byrom, Department of Astronomy, University of Florida, Gainesville, FL 32611, USA
+- V.A. Smedile, Department of Astronomy, The Ohio State University, Columbus, OH 43210, USA
 ## Overview
 
 This repository contains Python tools for preparing, updating, and managing YREC (Yale Rotating Stellar Evolution Code) model grids. These scripts help you:
