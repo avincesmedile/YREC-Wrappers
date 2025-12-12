@@ -10,7 +10,7 @@ Tools Include:
 
 - A reader function for YREC outputs
 - A namelist converter for the quick assignment of filepaths and physical constants. Allows the user to quickly adapt all YREC input files to their native directory structure and swithc between models quickly
-- A runner function that runs YREC in parallel on the native computer.
+- The code for re-creating our sample grid.
 
 ### slurm_tools: 
 Includes a yrec grid running function that quickly makes the sample grid. 
