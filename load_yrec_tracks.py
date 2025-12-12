@@ -28,7 +28,7 @@ except NameError:
     
     # URL of the raw Tracker.py file in the YREC-Wrappers repo
     RAW_TRACKER_URL = (
-        "https://raw.githubusercontent.com/yreclab/YREC-Wrappers/main/newheader_yrec/Tracker.py"
+        "https://github.com/avincesmedile/YREC-Wrappers/blob/main/Tracker.py"
     )
 
     try:
