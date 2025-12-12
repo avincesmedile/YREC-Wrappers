@@ -33,3 +33,7 @@ Once all the inlists have been generated you have to run them.
 batchrunner.py is a script to run a grid of namelists in python. It is intended to be used from the command line and has 2 versions within it: one for generating and running a mass-Fe/H grid, the other for running a pre-existing grid.
 
 run_yrec_grid.slurm is a an example slurm script for running a grid of YREC models on a supercomputer.
+
+**Reading Output Files**
+read_output_files allows the user to read individual .store, .last, and .track YREC output files into Pandas dataframes without
+any additional processing of the output files. 
