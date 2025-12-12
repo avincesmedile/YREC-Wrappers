@@ -61,8 +61,6 @@ def load_yrec_tracks(
     recursive=True,
     load_subgiants=True,
     load_all_tracks=True,
-    load_eeps=True,
-    load_isochrones=True,
     iso_round=2
 ):
     """
@@ -141,44 +139,8 @@ def load_yrec_tracks(
 
         output['subgiant_star_lists'] = subgiant_star_lists
 
-    # 5. Isochrones
-    if load_isochrones:
-        if not load_all_tracks:
-            raise ValueError("load_isochrones=True requires load_all_tracks=True")
 
-        isochrone_lists = {}
-        for track_list in star_lists.values():
-            for table, filename in track_list:
-                if 'Age(Gyr)' not in table.columns:
-                    continue
-                table = table.copy()
-                if iso_round < 1:
-                    print("Invalid iso_round; defaulting to 2.")
-                    iso_round = 2
-                table['AgeRounded'] = table['Age(Gyr)'].round(iso_round)
-                for age, age_group in table.groupby('AgeRounded'):
-                    iso_name = f"{age:.{iso_round}f}Gyr_iso"
-                    isochrone_lists.setdefault(iso_name, []).append(
-                        age_group.drop(columns=['AgeRounded']).copy()
-                    )
-        output['isochrone_lists'] = isochrone_lists
-
-    # 6. EEP tracks
-    if load_eeps:
-        if not load_all_tracks:
-            raise ValueError("load_eeps=True requires load_all_tracks=True")
-
-        eep_lists = {}
-        for track_list in star_lists.values():
-            for table, filename in track_list:
-                if 'Mass' not in table.columns:
-                    continue
-                for mass, mass_group in table.groupby('Mass'):
-                    eep_name = f"{mass:.2f}Msun_eep"
-                    eep_lists.setdefault(eep_name, []).append(mass_group.copy())
-        output['eep_lists'] = eep_lists
-
-    # 7. Add raw tracks if requested
+    # 5. Add raw tracks if requested
     if load_all_tracks:
         output['star_lists'] = star_lists
 
