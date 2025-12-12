@@ -1,10 +1,22 @@
 # YREC-Wrappers
-Wrappers, helpful codes, and additional machinery to interface with YREC in languages such as Python. Presented here as individual scripts to copy/paste and/or download. Compatible with command line and Jupyter/Spyder, and other such programs. We provide the ```modelgrid_tools``` folder for the primary mode of interacting with the grid. The ```modelgrid_tools_legacy``` is the precursor to the modelgrid_tools code, and is also applicable. The ```_legacy``` tools are more Jupyter Notebook (or another Python interface/environment) focused, whereas the primary ```_tools``` are a combination of an app/web compiler for Python and command line prompts. The main tools folder also provides compatibility with ```hypergator``` and ```slurm```. 
+Wrappers, helpful codes, and additional machinery to interface with YREC in languages such as Python. Presented here as individual scripts to copy/paste and/or download. Compatible with command line and Jupyter/Spyder, and other such programs. We provide the ```modelgrid_tools/main_tools``` folder for the primary mode of interacting with the grid. 
 
 ## modelgrid_tools:
-Contains guidelines and tools to create a grid of models in YREC. See the readme.md file in the folder for more details. This also contains update_nml.py, which allows the user to change several namelist parameters for multiple nml files at once.
+Contains guidelines and tools to create a grid of models in YREC. See the readme.md file in the folder for more details. This also contains update_nml.py, which allows the user to change several namelist parameters for multiple nml files at once. 
 
-## modelgrid_tools_legacy: 
-Precursor for tools. Alternative scripts in the event modelgrid_tools do not work. Contains namelist updaters, file readers, and a parallel processing batch runner function for running large numbers of YREC tools without the use of an external server or parallel processing network.
+### main_tools: 
+The main set of tools created for interacting with YREC. 
+Tools Include: 
+
+- A reader function for YREC outputs
+- A namelist converter for the quick assignment of filepaths and physical constants. Allows the user to quickly adapt all YREC input files to their native directory structure and swithc between models quickly
+- A runner function that runs YREC in parallel on the native computer.
+
+### slurm_tools: 
+Includes a yrec grid running function that quickly makes the sample grid. 
+
+### alternate_tools: 
+Provides backups and simpler versions of the ```main_tools``` repository for newer users or backups in case the main tools do not work. 
+
 
 
