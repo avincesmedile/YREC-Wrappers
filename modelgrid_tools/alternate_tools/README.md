@@ -1,7 +1,7 @@
 # Additional YREC Tools (`alternate_tools/`)
 ## Overview
 
-This repository contains Python tools for preparing, updating, and managing YREC (Yale Rotating Stellar Evolution Code) model grids. These scripts help you:
+This repository contains the more advanced Python tools for preparing, updating, and managing YREC (Yale Rotating Stellar Evolution Code) model grids. These scripts help you:
 
 - Update YREC namelist files with custom parameters.
 - Generate grids of stellar models over mass and metallicity ([Fe/H]).
