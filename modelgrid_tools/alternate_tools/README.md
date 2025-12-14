@@ -14,7 +14,7 @@ These tools are ideal for research-level stellar modeling, especially when creat
 
 ## Directory Structure
 
-main_tools/
+alternate_tools/
 - `yrec_parallel.py`          : Run YREC batches in parallel (one mass per node).
 - `read_output_files.py`     : Load YREC model tracks, store, and last into Python. Alternative to load_yrec_tracks
 - `change_nml.py`           : Update YREC namelist files, does not require a command prompt. Updates all filepaths in a directory to native user filepaths when downloading YREC.
