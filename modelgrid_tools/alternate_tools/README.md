@@ -8,7 +8,7 @@ This repository contains the more advanced Python tools for preparing, updating,
 - Load and manipulate YREC model tracks for analysis.
 - Run YREC in batch mode for multiple models efficiently.
 
-These tools are ideal for research-level stellar modeling, especially when creating large grids or testing multiple physical assumptions.
+These tools are ideal for more experienced YREC users looking to improve workflow or run large grids of custom namelists and models.
 
 ---
 
