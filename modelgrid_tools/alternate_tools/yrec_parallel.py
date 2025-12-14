@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-yrec_runner.py
+yrec_parallel.py
 
 Run multiple YREC model5.1c namelists in parallel with optional verbose output
 and progress bar. Designed for batch execution of stellar evolution model runs.
@@ -18,7 +18,7 @@ import subprocess as sub
 from tqdm import tqdm  # For progress bars
 
 
-def yrec_runner(
+def yrec_parallel(
     yrec_dir='/Users/vincentsmedile/YREC5.1/models',
     run_dirs='/Users/vincentsmedile/YREC5.1/models/Run_ZAMSmodels',
     verbose=False, 
@@ -131,7 +131,7 @@ def yrec_runner(
 
 # Allow script to be run directly with example paths
 if __name__ == "__main__":
-    yrec_runner(
+    yrec_parallel(
         yrec_dir='/Users/vincentsmedile/YREC5.1/models',
         run_dirs='/Users/vincentsmedile/YREC5.1/models/Run_ZAMSmodels',
         verbose=True
