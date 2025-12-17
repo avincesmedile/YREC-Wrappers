@@ -19,6 +19,7 @@ main_tools/
 - `load_yrec_tracks.py`     : Load YREC model tracks into Python.
 - `update_nml.py`           : Update YREC namelist files.
 - `make_modelgrid.py`       : Generate a mass-[Fe/H] grid of input files.
+- `solar_rot_calibrated.py`: Calibrate the L, T, R, and Age of a solar model.
 - `README.md`               : This documentation.
 
 
